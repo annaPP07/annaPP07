@@ -119,3 +119,73 @@ int main() {
 
     return 0;
 }
+
+Пирамидальная сортировка
+
+#include <iostream>
+using namespace std;
+
+// Функция для поддержания свойства кучи (heapify)
+void heapify(int arr[], int n, int root) {
+    int largest = root;         // Предполагаемый наибольший элемент
+    int left_child = 2*root + 1;// Левый потомок узла
+    int right_child = 2*root + 2;// Правый потомок узла
+
+    // Если левый дочерний узел больше корня
+    if (left_child < n && arr[left_child] > arr[largest])
+        largest = left_child;
+
+    // Если правый дочерний узел больше наибольшего на данный момент
+    if (right_child < n && arr[right_child] > arr[largest])
+        largest = right_child;
+
+    // Если наибольший элемент изменился
+    if (largest != root) {
+        swap(arr[root], arr[largest]); // Меняем корень с наибольшим элементом
+        heapify(arr, n, largest);      // Рекурсивно восстанавливаем кучу снизу вверх
+    }
+}
+
+// Функция для построения max-кучи из массива
+void build_heap(int arr[], int n) {
+    // Начиная с последнего родительского узла (n/2 - 1), строим max-кучу
+    for (int i = n / 2 - 1; i >= 0; --i)
+        heapify(arr, n, i);
+}
+
+// Основная функция пирамидальной сортировки
+void heap_sort(int arr[], int n) {
+    // Строим max-кучу из массива
+    build_heap(arr, n);
+
+    // Извлекаем элементы из кучи один за другим
+    for (int i = n - 1; i > 0; --i) {
+        // Меняем корневой элемент с последним элементом
+        swap(arr[0], arr[i]);
+        // Восстанавливаем структуру кучи
+        heapify(arr, i, 0);
+    }
+}
+
+// Вывод массива на экран
+void print_array(const int arr[], int n) {
+    for (int i = 0; i < n; ++i)
+        cout << arr[i] << " ";
+    cout << endl;
+}
+
+// Основная точка входа
+int main() {
+    int arr[] = {12, 11, 13, 5, 6, 7};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    cout << "Исходный массив: ";
+    print_array(arr, n);
+
+    heap_sort(arr, n); // Вызов функции сортировки
+
+    cout << "Отсортированный массив: ";
+    print_array(arr, n);
+
+    return 0;
+}
