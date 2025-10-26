@@ -127,3 +127,61 @@ if result != -1:
     print(f"Элемент {target_value} найден на позиции {result}.")
 else:
     print(f"Элемент {target_value} не найден.")
+
+Поиск по Фибоначчи
+
+def fibonacci_search(arr, target):
+    """
+    Реализует алгоритм поиска по Фибоначчи.
+    :param arr: отсортированный массив
+    :param target: искомое значение
+    :return: индекс искомого элемента или -1, если элемент не найден
+    """
+    # Генерируем последовательность чисел Фибоначчи, пока последнее число не станет больше или равно размеру массива
+    fib_M_minus_2 = 0  # F(k-2)
+    fib_M_minus_1 = 1  # F(k-1)
+    fib_M = fib_M_minus_1 + fib_M_minus_2  # F(k)
+
+    while fib_M < len(arr):
+        fib_M_minus_2 = fib_M_minus_1
+        fib_M_minus_1 = fib_M
+        fib_M = fib_M_minus_1 + fib_M_minus_2
+
+    offset = -1  # Начальное смещение для поиска
+    while fib_M > 1:
+        # Вычисляем индекс, на который нужно посмотреть
+        i = min(offset + fib_M_minus_2, len(arr) - 1)
+
+        # Если элемент в индексе меньше цели, движемся вправо
+        if arr[i] < target:
+            fib_M = fib_M_minus_1
+            fib_M_minus_1 = fib_M_minus_2
+            fib_M_minus_2 = fib_M - fib_M_minus_1
+            offset = i
+
+        # Если элемент в индексе больше цели, движемся влево
+        elif arr[i] > target:
+            fib_M = fib_M_minus_2
+            fib_M_minus_1 = fib_M_minus_1 - fib_M_minus_2
+            fib_M_minus_2 = fib_M - fib_M_minus_1
+
+        # Если элемент найден, возвращаем его индекс
+        else:
+            return i
+
+    # Если остался единственный элемент для проверки
+    if fib_M_minus_1 and arr[offset + 1] == target:
+        return offset + 1
+
+    # Если элемент не найден, возвращаем -1
+    return -1
+
+# Пример использования
+arr = [10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100]
+target = 85
+result = fibonacci_search(arr, target)
+
+if result != -1:
+    print(f"Элемент {target} найден на позиции {result}")
+else:
+    print(f"Элемент {target} не найден в массиве")
