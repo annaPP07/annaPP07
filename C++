@@ -236,3 +236,52 @@ int main() {
 
     return 0;
 }
+
+
+Интерполирующий поиск
+
+#include <iostream>
+using namespace std;
+
+// Функция для интерполирующего поиска
+int interpolationSearch(int arr[], int low, int high, int target) {
+    // Проверка условий окончания поиска
+    if ((low <= high) && (target >= arr[low]) && (target <= arr[high])) {
+        // Вычисляем пробную позицию (формула интерполяционного поиска)
+        int pos = low + (((double)(high - low) /
+                         (arr[high] - arr[low])) *
+                        (target - arr[low]));
+
+        // Три случая возникают при поиске:
+        if (arr[pos] == target) {
+            return pos;  // Совпадение найдено, возвращаем индекс
+        }
+
+        if (arr[pos] < target) {
+            return interpolationSearch(arr, pos + 1, high, target);  // Продолжаем поиск в правой части
+        }
+
+        if (arr[pos] > target) {
+            return interpolationSearch(arr, low, pos - 1, target);  // Продолжаем поиск в левой части
+        }
+    }
+
+    return -1;  // Элемент не найден
+}
+
+// Основная функция
+int main() {
+    int arr[] = {10, 12, 13, 16, 18, 19, 20, 21, 22, 23, 24, 33, 35, 42, 47};
+    int n = sizeof(arr) / sizeof(arr[0]);  // Вычисляем размер массива
+    int target = 18;  // Искомое значение
+
+    int index = interpolationSearch(arr, 0, n - 1, target);  // Вызов функции поиска
+
+    if (index != -1) {
+        cout << "Элемент найден на позиции " << index << endl;
+    } else {
+        cout << "Элемент не найден." << endl;
+    }
+
+    return 0;
+}
