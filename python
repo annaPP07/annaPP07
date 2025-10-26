@@ -100,3 +100,30 @@ def quicksort(arr):
 array = [12, 4, 5, 6, 7, 3, 1, 15]
 sorted_array = quicksort(array)
 print(sorted_array)
+
+
+Последовательный (линейный) поиск
+def linear_search(arr, target):
+    """
+    Линейный поиск в списке.
+    :param arr: список, в котором ведётся поиск
+    :param target: искомый элемент
+    :return: индекс искомого элемента или -1, если элемент не найден
+    """
+    # Перебираем элементы списка по порядку
+    for index in range(len(arr)):  # пробегаем по всем индексам массива
+        if arr[index] == target:    # если текущий элемент равен искомому
+            return index            # возвращаем индекс найденного элемента
+    return -1                      # если элемент не найден, возвращаем -1
+
+
+# Пример использования
+my_list = [4, 2, 7, 1, 9, 3]
+target_value = 7
+
+result = linear_search(my_list, target_value)
+
+if result != -1:
+    print(f"Элемент {target_value} найден на позиции {result}.")
+else:
+    print(f"Элемент {target_value} не найден.")
