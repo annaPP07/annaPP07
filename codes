@@ -1,1 +1,40 @@
+Блочная (корзинная) сортировка
 
+def bucket_sort(arr):
+    # Определяем минимальное и максимальное значения массива,
+    # чтобы создать нужное количество "баков"
+    min_val = min(arr)
+    max_val = max(arr)
+    
+    # Вычисляем диапазон значений каждого бака
+    range_per_bucket = (max_val - min_val + len(arr)) / float(len(arr))
+    
+    # Создаем список пустых баков (каждый бак - пустой список)
+    buckets = [[] for _ in range(len(arr))]
+    
+    # Распределяем элементы исходного массива по соответствующим бакам
+    for num in arr:
+        # Рассчитываем индекс нужного бака для текущего элемента
+        index = int((num - min_val) // range_per_bucket)
+        
+        # Добавляем элемент в соответствующий бак
+        buckets[index].append(num)
+    
+    # Сортируем каждый бак отдельно (например, встроенной функцией sorted())
+    result = []
+    for bucket in buckets:
+        # Если бак не пустой, сортируем его и добавляем отсортированные элементы в итоговый массив
+        if bucket:
+            result.extend(sorted(bucket))
+    
+    return result
+
+# Пример использования
+if __name__ == "__main__":
+    array_to_sort = [8, 2, 9, 1, 5]
+    print("Исходный массив:", array_to_sort)
+    sorted_array = bucket_sort(array_to_sort)
+    print("Отсортированный массив:", sorted_array)
+
+Исходный массив: [8, 2, 9, 1, 5]
+Отсортированный массив: [1, 2, 5, 8, 9]
