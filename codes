@@ -90,83 +90,85 @@ print("Отсортированный массив:", arr)
 
 Сортировка бусинами (гравитационная)
 def bead_sort(arr):
-    """
-    Гравитационная сортировка (алгоритм 'бусиной').
-    Вход: массив положительных целых чисел.
-    Выход: отсортированный массив.
-    """
-    # Получить максимальную высоту стека бусинок
-    max_height = max(arr)
+    # Получение максимальной величины среди элементов списка,
+    # чтобы определить длину необходимых строк ("бусин")
+    max_val = max(arr)
     
-    # Создать матрицу представления столбцов (стеков) бусинок
-    beads_matrix = [[False]*len(arr) for _ in range(max_height)]
+    # Создание матрицы с количеством строк равным длине arr
+    # и количеством столбцов равным максимальному значению
+    beads = [[False]*max_val for _ in range(len(arr))]
     
-    # Заполнить бусы в матрице
-    for col_idx, height in enumerate(arr):
-        for row_idx in range(height):
-            beads_matrix[row_idx][col_idx] = True
-    
-    # Теперь реализуем "падение" бусинок вниз
-    for row in beads_matrix:
-        stable_count = sum(row)
-        unstable_count = len(row) - stable_count
-        row[:stable_count] = [True] * stable_count
-        row[stable_count:] = [False] * unstable_count
-    
-    # Чтение результирующего отсортированного массива
+    # Заполнение матриц булеанов (True - бусинка присутствует, False - отсутствует)
+    for i in range(len(arr)):
+        # Первые arr[i] позиций в строке ставятся True (булевые бусинки),
+        # остальные остаются False
+        for j in range(arr[i]):
+            beads[i][j] = True
+            
+    # Перемещение бусин вниз: теперь каждый столбец представляет собой отсортированный элемент
+    for col in range(max_val):
+        count = sum(row[col] for row in beads)
+        
+        # Обнуляем весь столбец
+        for row in beads:
+            row[col] = False
+            
+        # Возвращаем "бусины" назад, начиная снизу
+        for row in reversed(beads[:count]):
+            row[col] = True
+            
+    # Восстанавливаем исходный список из результата выравнивания бусин
     result = []
-    for col_idx in range(len(arr)):
-        count = sum(beads_matrix[row_idx][col_idx] for row_idx in range(max_height))
-        result.append(count)
-    
+    for row in beads:
+        result.append(sum(row))
     return result
 
-# Пример использования
-if __name__ == "__main__":
-    input_list = [5, 3, 1, 7, 4]
-    sorted_list = bead_sort(input_list)
-    print(f"Исходный массив: {input_list}")
-    print(f"Отсортированный массив: {sorted_list}")
 
-Исходный массив: [5, 3, 1, 7, 4]
-Отсортированный массив: [7, 5, 4, 3, 1]
+# Пример использования
+arr = [5, 3, 1, 8]
+sorted_arr = bead_sort(arr)
+print("Исходный массив:", arr)
+print("Отсортированный массив:", sorted_arr)
+
+Исходный массив: [5, 3, 1, 8]
+Отсортированный массив: [1, 3, 5, 8]
 
 поиск скачками
 import math
 
-def jump_search(arr, target):
-    """
-    Алгоритм поиска скачками (Jump Search).
-    Ввод: отсортированный массив и искомое значение.
-    Вывод: индекс искомого элемента или -1, если элемент не найден.
-    """
-    n = len(arr)              # Длина массива
-    step = int(math.sqrt(n))  # Шаг поиска (квадратный корень из длины массива)
+def jump_search(arr, x):
+    # Шаг прыжка определяется как квадратный корень из размера массива
+    step = int(math.sqrt(len(arr)))
     
-    # 1-й этап: Быстрое продвижение по массиву большими шагами
-    prev = 0                 # Текущая стартовая точка
-    while arr[min(step, n)-1] < target:
-        prev = step           # Запоминаем предыдущий шаг
-        step += int(math.sqrt(n))  # Увеличение шага
-        if prev >= n:         # Если вышли за пределы массива
-            return -1         # Целевого элемента нет
-    
-    # 2-й этап: Обычный линейный поиск в маленькой окрестности
-    for i in range(prev, min(step, n)):
-        if arr[i] == target:  # Если нашли элемент
-            return i          # Возвращаем его индекс
-    
-    return -1                # Если элемент не найден
+    # Ищем подходящий диапазон для дальнейшего детального поиска
+    prev = 0
+    while arr[min(step, len(arr)) - 1] < x:
+        prev = step       # запоминаем предыдущую позицию
+        step += int(math.sqrt(len(arr)))   # увеличиваем шаг дальше
+        
+        if prev >= len(arr):     # проверяем выход за пределы массива
+            return -1           # возвращаем -1, если элемент не найден
+            
+    # Применяем линейный поиск в выбранном диапазоне
+    for i in range(prev, min(step + 1, len(arr))):
+        if arr[i] == x:
+            return i      # Возвращаем индекс найденного элемента
+            
+    return -1            # Если элемент не найден
 
-# Пример использования
-if __name__ == "__main__":
-    arr = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
-    target = 13
-    result = jump_search(arr, target)
-    if result != -1:
-        print(f"Элемент {target} найден на позиции {result}.")
-    else:
-        print(f"Элемент {target} не найден в массиве.")
+
+# Пример работы программы
+arr = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+x = 55
+
+result = jump_search(arr, x)
+if result != -1:
+    print(f'Элемент {x} найден на индексе {result}')
+else:
+    print('Элемент не найден')
+
+Элемент 55 найден на индексе 10
+
 
 экспоненциальный поиск
 def binary_search(arr, left, right, target):
