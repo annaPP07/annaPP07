@@ -111,3 +111,46 @@ if __name__ == "__main__":
 Отсортированный массив: [1, 2, 3, 4, 5, 6]
 
 Сортировка бусинами (гравитационная)
+def bead_sort(arr):
+    """
+    Гравитационная сортировка (алгоритм 'бусиной').
+    Вход: массив положительных целых чисел.
+    Выход: отсортированный массив.
+    """
+    # Получить максимальную высоту стека бусинок
+    max_height = max(arr)
+    
+    # Создать матрицу представления столбцов (стеков) бусинок
+    beads_matrix = [[False]*len(arr) for _ in range(max_height)]
+    
+    # Заполнить бусы в матрице
+    for col_idx, height in enumerate(arr):
+        for row_idx in range(height):
+            beads_matrix[row_idx][col_idx] = True
+    
+    # Теперь реализуем "падение" бусинок вниз
+    for row in beads_matrix:
+        stable_count = sum(row)
+        unstable_count = len(row) - stable_count
+        row[:stable_count] = [True] * stable_count
+        row[stable_count:] = [False] * unstable_count
+    
+    # Чтение результирующего отсортированного массива
+    result = []
+    for col_idx in range(len(arr)):
+        count = sum(beads_matrix[row_idx][col_idx] for row_idx in range(max_height))
+        result.append(count)
+    
+    return result
+
+# Пример использования
+if __name__ == "__main__":
+    input_list = [5, 3, 1, 7, 4]
+    sorted_list = bead_sort(input_list)
+    print(f"Исходный массив: {input_list}")
+    print(f"Отсортированный массив: {sorted_list}")
+
+Исходный массив: [5, 3, 1, 7, 4]
+Отсортированный массив: [7, 5, 4, 3, 1]
+
+Поиск скачками
