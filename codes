@@ -1,53 +1,43 @@
 Блочная (корзинная) сортировка
 
 def bucket_sort(arr):
-    # Если массив пуст или состоит всего из одного элемента,
-    # значит он уже отсортирован
-    if len(arr) <= 1:
-        return arr
+    # Определяем максимальное значение в списке
+    max_value = max(arr)
     
-    # Определяем минимальное и максимальное значения в массиве
-    min_val = min(arr)
-    max_val = max(arr)
+    # Количество корзин определяется числом элементов
+    size = len(arr)
     
-    # Вычисляем количество корзин исходя из размера массива
-    num_buckets = len(arr)
-    
-    # Создаем список корзин (каждая корзина изначально пустая)
-    buckets = [[] for _ in range(num_buckets)]
-    
-    # Рассчитываем диапазон каждого интервала корзины
-    interval_range = (max_val - min_val + 1) / float(num_buckets)
-    
-    # Распределяем элементы по корзинам
-    for value in arr:
-        index = int((value - min_val) // interval_range)
+    # Создаем пустые корзины
+    buckets_list = []
+    for _ in range(size):
+        buckets_list.append([])
         
-        # Проверяем крайний случай, чтобы избежать выхода за границы индекса
-        if index >= num_buckets:
-            index -= 1
-            
-        # Добавляем значение в нужную корзину
-        buckets[index].append(value)
+    # Распределяем элементы по корзинам
+    for i in range(len(arr)):
+        index_b = int((size * arr[i]) / (max_value + 1))
+        buckets_list[index_b].append(arr[i])
     
-    # Сортируем каждую корзину отдельно встроенной функцией sorted()
-    sorted_arr = []
-    for bucket in buckets:
-        sorted_bucket = sorted(bucket)
-        sorted_arr.extend(sorted_bucket)
+    # Сортируем каждую отдельную корзину (используем встроенную сортировку Python)
+    for i in range(size):
+        buckets_list[i] = sorted(buckets_list[i])
     
-    return sorted_arr
+    # Объединяем отсортированные корзины
+    final_output = []
+    for i in range(size):
+        final_output += buckets_list[i]
+    
+    return final_output
 
 
 # Пример использования
 if __name__ == "__main__":
-    unsorted_array = [89, 45, 68, 90, 29, 34, 17]
-    print("Исходный массив:", unsorted_array)
-    sorted_array = bucket_sort(unsorted_array)
+    array_to_sort = [8, 2, 5, 3, 9, 1, 6, 7, 4]
+    print("Исходный массив:", array_to_sort)
+    sorted_array = bucket_sort(array_to_sort)
     print("Отсортированный массив:", sorted_array)
 
-Исходный массив: [89, 45, 68, 90, 29, 34, 17]
-Отсортированный массив: [17, 29, 34, 45, 68, 89, 90]
+Исходный массив: [8, 2, 5, 3, 9, 1, 6, 7, 4]
+Отсортированный массив: [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 Блинная сортировка
 
