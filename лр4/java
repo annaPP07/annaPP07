@@ -1,1 +1,34 @@
+public class Power {
+    public static double power(double x, int n) {
+        // Базовый случай: x^0 = 1
+        if (n == 0) {
+            return 1.0;
+        }
+        
+        // Обработка отрицательной степени
+        if (n < 0) {
+            return 1.0 / power(x, -n);
+        }
+        
+        // Если n чётное: x^n = (x^(n/2))^2
+        if (n % 2 == 0) {
+            double half_power = power(x, n / 2);
+            return half_power * half_power;
+        }
+        
+        // Если n нечётное: x^n = x * x^(n-1)
+        else {
+            return x * power(x, n - 1);
+        }
+    }
 
+    public static void main(String[] args) {
+        System.out.println(power(2, 10));   // 1024.0
+        System.out.println(power(3, -2));   // 0.111...
+        System.out.println(power(5, 0));    // 1.0
+    }
+}
+
+1024
+0.111111
+1
