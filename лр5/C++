@@ -1,1 +1,31 @@
-
+#include <iostream>
+using namespace std;
+double power(double x, int n) {
+    // Базовый случай: x^0 = 1
+    if (n == 0) {
+        return 1.0;
+    }
+    // Обработка отрицательной степени
+    if (n < 0) {
+        return 1.0 / power(x, -n);
+    }
+    // Если n чётное: x^n = (x^(n/2))^2
+    if (n % 2 == 0) {
+        double half_power = power(x, n / 2);
+        return half_power * half_power;
+    }
+    // Если n нечётное: x^n = x * x^(n-1)
+    else {
+        return x * power(x, n - 1);
+    }
+}
+int main() {
+    cout << power(2, 10) << endl;   
+    cout << power(3, -2) << endl;   
+    cout << power(5, 0) << endl;    
+    return 0;
+}
+Результат выполнения:
+1024
+0.111111
+1
