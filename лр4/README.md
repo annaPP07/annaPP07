@@ -15,6 +15,93 @@
 Матрица смежности: Используются массивы visited и distance, а для выбора следующей вершины применяется вспомогательная функция для поиска минимума.
 Список смежности: Граф представлен как массив ArrayList[], а для обхода используется PriorityQueue. При обработке вершины накапливается вес пути до неё (wsf).
 - C++: Граф моделируется с помощью вектора векторов структур (с полями destination и weight). Для приоритетной очереди применяется priority_queue с пользовательским компаратором, обеспечивающим извлечение вершины с минимальным расстоянием. Используются массивы distances и previous, которые позволяют не только вычислить стоимость кратчайшего пути, но и восстановить его.
+**Реализация деревьев и графов на Python, Java и C++**
+ ```python
+" Бинарное дерево
+class TreeNode:
+    def __init__(self, val=0):
+        self.val = val
+        self.left = None
+        self.right = None
+
+" Граф (список смежности)
+class Graph:
+    def __init__(self):
+        self.adj_list = {}
+    
+    def add_edge(self, u, v):
+        if u not in self.adj_list:
+            self.adj_list[u] = []
+        self.adj_list[u].append(v)
+        
+        # Для неориентированного графа добавляем обратное ребро
+        if v not in self.adj_list:
+            self.adj_list[v] = []
+        self.adj_list[v].append(u)
+Особенности: динамическая типизация, простота синтаксиса, встроенные структуры (словари, списки).
+```java
+// Бинарное дерево
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
+// Граф (список смежности)
+import java.util.*;
+
+class Graph {
+    private Map<Integer, List<Integer>> adjList = new HashMap<>();
+    
+    public void addEdge(int u, int v) {
+        adjList.putIfAbsent(u, new ArrayList<>());
+        adjList.get(u).add(v);
+        
+        // Для неориентированного графа
+        adjList.putIfAbsent(v, new ArrayList<>());
+        adjList.get(v).add(u);
+    }
+}
+Особенности: строгая типизация, использование стандартных коллекций (HashMap, ArrayList), явное управление памятью.
+```c++
+// Бинарное дерево
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+
+// Граф (список смежности)
+#include <unordered_map>
+#include <vector>
+
+class Graph {
+    std::unordered_map<int, std::vector<int>> adjList;
+public:
+    void addEdge(int u, int v) {
+        adjList[u].push_back(v);
+        adjList[v].push_back(u); // Для неориентированного графа
+    }
+};
+Особенности: ручное управление памятью, высокая производительность, использование STL (unordered_map, vector).
+
+Реализация на Python (итеративная)
+def dfs_iterative(graph, start):
+    visited = set()
+    stack = [start]
+    
+    while stack:
+        vertex = stack.pop()
+        if vertex not in visited:
+            visited.add(vertex)
+            print(vertex)  # Обработка вершины
+            
+            # Добавляем соседей в стек (в обратном порядке для сохранения порядка обхода)
+            for neighbor in reversed(graph.adj_list.get(vertex, [])):
+                if neighbor not in visited:
+                    stack.append(neighbor)
 
 **Пошаговая работа алгоритма на python**
 Дан граф:
