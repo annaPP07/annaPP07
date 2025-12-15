@@ -2,10 +2,15 @@
 
 Задача: реализовать Variational Autoencoder для генеративного моделирования.
 Требования:
+
 Encoder с probabilistic выходом (mean и log_variance)
+
 Reparameterization trick для sampling
+
 Decoder для реконструкции
+
 KL-divergence и reconstruction losses
+
 Код-заготовка (Python):
 import tensorflow as tf
 class Encoder(tf.keras.layers.Layer):
