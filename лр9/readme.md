@@ -18,27 +18,27 @@ class Encoder(tf.keras.layers.Layer):
  super(Encoder, self).__init__()
  self.latent_dim = latent_dim
 
- # TODO: Построить encoder сеть
- # Входной: image (28, 28, 1)
- # Выходной: mean и log_variance (latent_dim,)
+ #TODO: Построить encoder сеть
+ #Входной: image (28, 28, 1)
+ #Выходной: mean и log_variance (latent_dim,)
  pass
 
  def call(self, x):
- # TODO: Forward pass
- # Возвращать mean, log_variance, и reconstructed input
+ #TODO: Forward pass
+ #Возвращать mean, log_variance, и reconstructed input
  pass
 class Decoder(tf.keras.layers.Layer):
  def __init__(self):
  super(Decoder, self).__init__()
 
- # TODO: Построить decoder сеть
- # Входной: z (latent_dim,)
- # Выходной: reconstructed image (28, 28, 1)
+ #TODO: Построить decoder сеть
+ #Входной: z (latent_dim,)
+ #Выходной: reconstructed image (28, 28, 1)
  pass
 
 67
  def call(self, z):
- # TODO: Forward pass
+ #TODO: Forward pass
  pass
 class VAE(tf.keras.Model):
  def __init__(self, latent_dim=20):
@@ -49,64 +49,64 @@ class VAE(tf.keras.Model):
  self.decoder = Decoder()
 
  def encode(self, x):
- # TODO: Кодировать input в latent space
+ #TODO: Кодировать input в latent space
  mean, log_variance, _ = self.encoder(x)
  return mean, log_variance
 
  def sample(self, mean, log_variance):
- # TODO: Reparameterization trick
- # z = mean + sqrt(exp(log_variance)) * epsilon
- # где epsilon ~ N(0, 1)
+ #TODO: Reparameterization trick
+ #z = mean + sqrt(exp(log_variance)) * epsilon
+ #где epsilon ~ N(0, 1)
 
  batch_size = tf.shape(mean)
  epsilon = tf.random.normal(shape=(batch_size, self.latent_dim))
 
- # TODO: Вычислить z
+ #TODO: Вычислить z
  pass
 
  def decode(self, z):
- # TODO: Декодировать из latent space
+ #TODO: Декодировать из latent space
  pass
 
  def call(self, x):
- # TODO: Forward pass
+ #TODO: Forward pass
  pass
 
  def reconstruction_loss(self, original, reconstructed):
- # TODO: Вычислить reconstruction loss
- # Использовать binary cross-entropy для [0, 1] изображений
+ #TODO: Вычислить reconstruction loss
+ #Использовать binary cross-entropy для [0, 1] изображений
  pass
 
  def kl_divergence_loss(self, mean, log_variance):
- # TODO: Вычислить KL divergence loss
- # KL = -0.5 * sum(1 + log_variance - mean^2 - exp(log_variance))
+ #TODO: Вычислить KL divergence loss
+ #KL = -0.5 * sum(1 + log_variance - mean^2 - exp(log_variance))
 68
  pass
 
  def vae_loss(self, original, reconstructed, mean, log_variance):
- # TODO: Комбинировать losses
- # total_loss = reconstruction_loss + beta * kl_loss
- # где beta контролирует trade-off
+ #TODO: Комбинировать losses
+ #total_loss = reconstruction_loss + beta * kl_loss
+ #где beta контролирует trade-off
  pass
 
  @tf.function
  def train_step(self, x):
- # TODO: Один шаг обучения
+ #TODO: Один шаг обучения
  with tf.GradientTape() as tape:
- # Forward pass
+ #Forward pass
  mean, log_variance, reconstructed = self(x)
 
- # Loss
+ #Loss
  loss = self.vae_loss(x, reconstructed, mean, log_variance)
 
- # Backward pass
+ #Backward pass
  gradients = tape.gradient(loss, self.trainable_variables)
- # TODO: Обновить веса
+ #TODO: Обновить веса
 
  return loss
 
  def generate_new_images(self, num_images=10):
- # TODO: Генерировать новые изображения из random latent vectors
+ #TODO: Генерировать новые изображения из random latent vectors
  pass
 # Что нужно дополнить:
 # 1. Encoder архитектуру
@@ -116,6 +116,10 @@ class VAE(tf.keras.Model):
 # 5. KL divergence loss
 # 6. Train step
 # 7. Визуализацию interpolation в latent space
+
+
+
+
 
 Контрольный вопрос:
 19. Опишите алгоритм Spectral Clustering. Почему используются собственные
