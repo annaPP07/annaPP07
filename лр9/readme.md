@@ -236,14 +236,14 @@ class VAE(tf.keras.Model):
 
  
  pass
-# Что нужно дополнить:
-# 1. Encoder архитектуру
-# 2. Decoder архитектуру
-# 3. Reparameterization trick
-# 4. Reconstruction loss
-# 5. KL divergence loss
-# 6. Train step
-# 7. Визуализацию interpolation в latent space
+ Что нужно дополнить:
+ 1. Encoder архитектуру
+ 2. Decoder архитектуру
+ 3. Reparameterization trick
+ 4. Reconstruction loss
+ 5. KL divergence loss
+ 6. Train step
+7. Визуализацию interpolation в latent space
 
 
 
