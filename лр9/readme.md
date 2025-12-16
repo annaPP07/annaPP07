@@ -12,8 +12,14 @@ Decoder для реконструкции
 KL-divergence и reconstruction losses
 
 Код-заготовка (Python):
+
+
 import tensorflow as tf
+
+
 class Encoder(tf.keras.layers.Layer):
+
+
  def __init__(self, latent_dim):
  super(Encoder, self).__init__()
  self.latent_dim = latent_dim
