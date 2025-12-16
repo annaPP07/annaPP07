@@ -1,4 +1,4 @@
-Задание 19: Variational Autoencoder (VAE)
+# **Задание 19: Variational Autoencoder (VAE)**
 
 Задача: реализовать Variational Autoencoder для генеративного моделирования.
 Требования:
@@ -236,7 +236,9 @@ class VAE(tf.keras.Model):
 
  
  pass
- Что нужно дополнить:
+
+ 
+**Что нужно дополнить:**
  1. Encoder архитектуру
  2. Decoder архитектуру
  3. Reparameterization trick
