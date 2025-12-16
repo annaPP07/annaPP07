@@ -1,5 +1,6 @@
 # **Задание 19: Variational Autoencoder (VAE)**
 
+
 Задача: реализовать Variational Autoencoder для генеративного моделирования.
 Требования:
 
@@ -309,6 +310,8 @@ class VAE(tf.keras.Model):
 
 19. Опишите алгоритм Spectral Clustering. Почему используются собственные
 векторы?
+
+
 Алгоритм Spectral Clustering (спектральной кластеризации) работает следующим образом:
 
 
